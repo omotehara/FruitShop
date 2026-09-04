@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "mypage/show"
+  # ユーザ認証
+  devise_for :users
+  # マイページ
+  resources :mypage, only: [:show]
+
   # 新規商品
   get "products/new"# 商T品投稿フォームを表示
   #get "homes/top"
