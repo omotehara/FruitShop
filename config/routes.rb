@@ -1,27 +1,25 @@
 Rails.application.routes.draw do
+  get "orders/new"
   get "mypage/show"
   # ユーザ認証
   devise_for :users
   # マイページ
   resources :mypage, only: [:show]
 
-  # 新規商品
-  get "products/new"# 商T品投稿フォームを表示
-  #get "homes/top"
-  post 'products', to: 'products#create'  # 登録
+  # 商品関連
+  resources :products
 
-  # 商品一覧
-  get 'products', to: 'products#index'
-  
-  # 商品詳細
-  get 'products/:id', to: 'products#show', as: 'product'
+  # 注文関連
+  resources :orders, only: [:index, :new, :create] do 
+    collection do
+      post :confirm   # 注文確認
+      
+    end
 
-  # 商品編集
-  get 'products/:id/edit', to: 'products#edit', as: 'edit_product'
-  patch 'products/:id', to: 'products#update' # 編集
-
-  # 商品削除
-  delete 'products/:id', to: 'products#destroy', as: 'destroy_product'
+    member do
+      get :complete  # 注文完了
+    end
+  end
 
 
   # トップページ

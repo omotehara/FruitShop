@@ -72,17 +72,3 @@ class ProductsController < ApplicationController
       end
     end
 end
-current_userはDeviseが提供する現在ログインしているユーザにあたります。
-これで、管理者フラグが false のユーザは、indexアクションと showアクションのみ実行できるようになります。
-
-商品一覧ビュー編集
-次に、ビューの編集に移ります。
-商品一覧画面の新規登録リンクを、管理者のみが表示できるようにします。以下のように追記してください。
-
-  <h1>商品一覧</h1>
-
-+ <% if current_user.admin_flg == true %>
-    <%= link_to "新規登録", new_product_path %>
-+ <% end %>
-
-  <!-- 省略 -->
