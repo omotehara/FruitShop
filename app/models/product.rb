@@ -1,8 +1,10 @@
 class Product < ApplicationRecord
-  has_many :orders
+    has_many :orders
+    has_many :cart_items
+
     # バリデーション
-  validates :name, presence: true, uniqueness: true  # 商品名は必須で一意
-  validates :price, presence: true                   # 価格は必須
+    validates :name, presence: true, uniqueness: true  # 商品名は必須で一意
+    validates :price, presence: true                   # 価格は必須
 
   # Active Storage（商品画像）
     has_one_attached :photo
