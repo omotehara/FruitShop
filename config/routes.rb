@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  # get "carts/show"
+  # get "carts/index"
   get "orders/new"
-  get "mypage/show"
+  # get "mypage/show"
   # ユーザ認証
   devise_for :users
   # マイページ
@@ -9,6 +11,17 @@ Rails.application.routes.draw do
   # 商品関連
   resources :products
 
+  resources :carts, only: [:show, :index] do
+  # セッションカートに商品を追加、数量を更新、商品を削除するアクション
+    collection do
+      post :add_product  # カートに商品を追加
+    end
+    member do
+      delete :remove_item  # カートから商品を削除
+      post :update_quantity  # カート内の商品数を変更
+    end
+  end
+  
   # 注文関連
   resources :orders, only: [:index, :new, :create] do 
     collection do
