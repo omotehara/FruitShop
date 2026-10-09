@@ -2,9 +2,17 @@ class CustomersController < ApplicationController
   before_action :set_customer, only: %i[ show edit update destroy ]
 
   # GET /customers or /customers.json
-  def index
-    @customers = Customer.all
+def index
+  @customers = Customer.all
+
+  if params[:name].present?
+    @customers = @customers.where("name like ?", "%#{params[:name]}%")
   end
+
+  if params[:age].present?
+    @customers = @customers.where(age: params[:age])
+  end
+end
 
   # GET /customers/1 or /customers/1.json
   def show
